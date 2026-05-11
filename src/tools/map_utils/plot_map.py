@@ -26,9 +26,9 @@ from trajdata.dataset_specific.xodr.vector_map_export import (
 from trajdata.maps import VectorMap
 
 try:
-    matplotlib.use("Qt5Agg")
+    matplotlib.use("TkAgg")
 except Exception:
-    print("Could not set matplotlib backend to Qt5Agg, using default backend.")
+    print("Could not set matplotlib backend to TkAgg, using default backend.")
     pass
 
 

@@ -30,7 +30,6 @@ dependencies = [
     "black",
     "ruff",
     "mypy",
-    "pyqt5",
 ]
 
 # Local development sources
