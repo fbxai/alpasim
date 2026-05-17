@@ -93,9 +93,21 @@ override-dependencies = [
   # upstream git tag (pinned by SHA, immune to tag retargeting) to bypass PyPI
   # until the project is unquarantined.
   "lightning @ git+https://github.com/Lightning-AI/pytorch-lightning.git@2129fdf3622e39ba46be4e1139af408e7e951cf3",
+  # cosmos-rl (transitive via alpamayo_r1) pins tensordict==0.7.2, which
+  # publishes no aarch64-linux wheel. Override to >=0.8.0 on aarch64 only so
+  # x86_64 keeps the upstream pin.
+  "tensordict>=0.8.0; sys_platform == 'linux' and platform_machine == 'aarch64'",
+  # torch 2.8.0 pins `triton==3.4.0; platform_machine == "x86_64"`, but
+  # liger-kernel requires triton unconditionally. uv's universal resolution
+  # therefore picks 3.4.0 on aarch64, where it has no wheel. Bump to >=3.5.0
+  # on aarch64 only.
+  "triton>=3.5.0; sys_platform == 'linux' and platform_machine == 'aarch64'",
 ]
 constraint-dependencies = [
   # setuptools 82+ removed pkg_resources, which grpcio-tools 1.62.3 still needs.
   # Remove this constraint when grpcio-tools and protobuf are upgraded to 5.x+.
   "setuptools<82",
+]
+required-environments = [
+  "sys_platform == 'linux' and platform_machine == 'aarch64'",
 ]
